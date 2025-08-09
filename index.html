@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Submit Review / Appeal</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <img src="/assets/logo.png" alt="Logo" class="logo" />
+      <h1 class="title">Submit Review / Appeal</h1>
+    </header>
+
+    <main class="card">
+      <p class="lead">আপনার বিষয়টি নিচে লিখে জমা দিন — কোনো পাসওয়ার্ড চাওয়া হবে না।</p>
+
+      <form id="appealForm" method="POST" action="/api/submit">
+        <input type="hidden" name="site_secret" value="__REPLACE_WITH_SITE_SECRET__" />
+        <div class="field">
+          <label>নাম</label>
+          <input name="name" required />
+        </div>
+
+        <div class="field">
+          <label>ইমেইল / যোগাযোগ (ঐচ্ছিক)</label>
+          <input name="contact" />
+        </div>
+
+        <div class="field">
+          <label>পেইজ/অ্যাকাউন্ট লিংক</label>
+          <input name="link" placeholder="https://facebook.com/yourpage" />
+        </div>
+
+        <div class="field">
+          <label>আপিল/মেসেজ (বিস্তারিত)</label>
+          <textarea name="message" rows="6" required></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Submit Appeal</button>
+        </div>
+
+        <p class="note">নোট: কোনো পাসওয়ার্ড বা গোপন তথ্য এখানে পাঠাবেন না।</p>
+      </form>
+    </main>
+
+    <footer class="foot">© তোমার সেবা — Demo</footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('appealForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const res = await fetch(form.action, { method: 'POST', body: data });
+      const j = await res.json();
+      if (j.ok) {
+        alert('Submitted — আমরা তোমাকে Telegram এ নোটিফিকেশন পাঠাবো।');
+        form.reset();
+      } else {
+        alert('তথ্য পাঠাতে সমস্যা হয়েছে: ' + (j.error || 'Unknown'));
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "appeal-form-safe",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev",
+    "vercel-build": "echo skip-build"
+  },
+  "dependencies": {}
+}
